@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -17,19 +18,19 @@ namespace GraphDiffClient
 
 		public GraphDiffClient(Func<Task<string>> tokenRetriever, string tenantId)
 		{
-			_httpClient = new HttpClient(); // {BaseAddress = _baseUrl};
+			_httpClient = new HttpClient();
 			_tenantId = tenantId;
 			_tokenRetriever = tokenRetriever;
 		}
 
-		public async Task<GraphResponse> GetUsersAsync()
+		public async Task<GraphResponse> GetUsersAsync(List<string> select = null)
 		{
 			if (string.IsNullOrEmpty(_accessToken))
 				_accessToken = await _tokenRetriever().ConfigureAwait(false);
 
 			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
-			var queryParams = GenerateQueryParams();
+			var queryParams = GenerateQueryParams(select);
 			var requestUri =
 				new Uri(string.Format("https://graph.windows.net/{0}/users", _tenantId)).AddQueryParameters(queryParams);
 			var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
@@ -44,13 +45,22 @@ namespace GraphDiffClient
 			return data;
 		}
 
-		private static Dictionary<string, string> GenerateQueryParams()
+		private static Dictionary<string, string> GenerateQueryParams(List<string> selectList)
 		{
-			return new Dictionary<string, string>
+			var selectFilter = string.Empty;
+			if (selectList != null && selectList.Any())
+				selectFilter = selectList.Aggregate((s1, s2) => s1 + "," + s2);
+
+			var queryParams = new Dictionary<string, string>
 			{
 				{"api-version", "1.5"},
-				{"deltaLink", ""}
+				{"deltaLink", ""},
 			};
+
+			if (selectList != null && selectList.Any())
+				queryParams["$select"] = selectFilter;
+
+			return queryParams;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +22,13 @@ namespace GraphDiffClient.Sample
 
 		public async Task GetUsers()
 		{
+			var select = new List<string>
+			{
+				"User/displayName",
+				"User/otherMails",
+			};
 			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
-			var result = await client.GetUsersAsync().ConfigureAwait(false);
+			var result = await client.GetUsersAsync(select).ConfigureAwait(false);
 
 			foreach (var user in result.Users)
 			{
