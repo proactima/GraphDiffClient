@@ -28,13 +28,15 @@ namespace GraphDiffClient.Sample
 				"User/otherMails",
 			};
 			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
-			var result = await client.GetUsersAsync(select).ConfigureAwait(false);
+			var result = await client.GetUsersAsync().ConfigureAwait(false);
+			//var result = await client.GetGroupsAsync().ConfigureAwait(false);
+			//var result = await client.GetContactsAsync().ConfigureAwait(false);
 
-			foreach (var user in result.Users)
-			{
-				Console.WriteLine("UserObjectId: {0}  UPN: {1}  Name: {2}  E-Mail: {3}", user.Id, user.Upn,
-					user.DisplayName, user.OtherMails.FirstOrDefault());
-			}
+			//foreach (var user in result.Values)
+			//{
+			//	Console.WriteLine("UserObjectId: {0}  UPN: {1}  Name: {2}  E-Mail: {3}", user.Id, user.Upn,
+			//		user.DisplayName, user.OtherMails.FirstOrDefault());
+			//}
 		}
 
 		private async Task<string> AquireTokenForApplicationAsync()

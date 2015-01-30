@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace GraphDiffClient.Models
 {
-	public class GraphResponse
+	public abstract class BaseGraphResponse
 	{
 		[JsonProperty(PropertyName = "odata.metadata")]
 		public string Metadata { get; set; }
@@ -24,9 +23,6 @@ namespace GraphDiffClient.Models
 
 		[JsonProperty(PropertyName = "aad.nextPage")]
 		public string NextPage { get; set; }
-
-		[JsonProperty(PropertyName = "value")]
-		public IEnumerable<User> Users { get; set; }
 
 		[JsonIgnore]
 		public bool HasMorePages

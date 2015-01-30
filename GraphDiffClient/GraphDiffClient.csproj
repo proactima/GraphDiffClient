@@ -55,7 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiffRequest.cs" />
-    <Compile Include="Models\GraphResponse.cs" />
+    <Compile Include="Models\BaseGraphResponse.cs" />
+    <Compile Include="Models\GroupGraphResponse.cs" />
+    <Compile Include="Models\UserGraphResponse.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="GraphDiffClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
