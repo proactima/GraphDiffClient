@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
@@ -7,17 +8,20 @@ namespace GraphDiffClient.Sample
 {
 	public class GraphService
 	{
-		private const string ClientId = "";
-		private const string Secret = "";
-		private const string TenantId = "";
+		private readonly string _clientId = "";
+		private readonly string _secret = "";
+		private readonly string _tenantId = "";
 
 		public GraphService()
 		{
+			_clientId = ConfigurationManager.AppSettings["ClientId"];
+			_secret = ConfigurationManager.AppSettings["Secret"];
+			_tenantId = ConfigurationManager.AppSettings["TenantId"];
 		}
 
 		public async Task GetUsers()
 		{
-			var client = new GraphDiffClient(AquireTokenForApplicationAsync, TenantId);
+			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
 			var result = await client.GetUsersAsync().ConfigureAwait(false);
 
 			foreach (var user in result.Users)
@@ -27,10 +31,10 @@ namespace GraphDiffClient.Sample
 			}
 		}
 
-		private static async Task<string> AquireTokenForApplicationAsync()
+		private async Task<string> AquireTokenForApplicationAsync()
 		{
-			var authContext = new AuthenticationContext(string.Format("https://login.windows.net/{0}", TenantId));
-			var credential = new ClientCredential(ClientId, Secret);
+			var authContext = new AuthenticationContext(string.Format("https://login.windows.net/{0}", _tenantId));
+			var credential = new ClientCredential(_clientId, _secret);
 
 			var result =
 				await authContext.AcquireTokenAsync("https://graph.windows.net", credential).ConfigureAwait(false);
