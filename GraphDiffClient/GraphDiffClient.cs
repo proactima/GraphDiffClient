@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using GraphDiffClient.Models;
 using Newtonsoft.Json;
 
 namespace GraphDiffClient
@@ -38,9 +39,7 @@ namespace GraphDiffClient
 			var result = await _httpClient.SendAsync(request).ConfigureAwait(false);
 			var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-			var jsonSettings = new JsonSerializerSettings {ContractResolver = new NullToEmptyListResolver()};
-
-			var data = JsonConvert.DeserializeObject<GraphResponse>(stringResult, jsonSettings);
+			var data = JsonConvert.DeserializeObject<GraphResponse>(stringResult);
 
 			return data;
 		}

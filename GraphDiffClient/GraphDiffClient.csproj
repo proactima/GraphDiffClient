@@ -54,12 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmptyListValueProvider.cs" />
-    <Compile Include="GraphUserConverter.cs" />
-    <Compile Include="NullToEmptyListResolver.cs" />
+    <Compile Include="DiffRequest.cs" />
+    <Compile Include="Models\GraphResponse.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="GraphDiffClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

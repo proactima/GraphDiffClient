@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace GraphDiffClient
+namespace GraphDiffClient.Models
 {
 	public class User
 	{
@@ -25,8 +25,14 @@ namespace GraphDiffClient
 		[JsonProperty(PropertyName = "userPrincipalName")]
 		public string Upn { get; set; }
 
+		[JsonIgnore]
+		public List<string> OtherMails
+		{
+			get { return _otherMails ?? new List<string>(); }
+		}
+
 		[JsonProperty(PropertyName = "otherMails")]
-		public List<string> OtherMails { get; set; }
+		private List<string> _otherMails { get; set; }
 
 		[JsonProperty(PropertyName = "userType")]
 		public string UserType { get; set; }
