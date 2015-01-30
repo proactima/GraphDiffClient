@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace GraphDiffClient.Models
@@ -17,10 +16,9 @@ namespace GraphDiffClient.Models
 		{
 			get
 			{
-				if (DeltaLink == null)
-					return string.Empty;
-
-				return DeltaLink.ExtractQueryParams().FirstOrDefault().Value;
+				return DeltaLink == null
+					? string.Empty
+					: DeltaLink.ExtractNamedQueryParameter("deltaLink", false);
 			}
 		}
 
