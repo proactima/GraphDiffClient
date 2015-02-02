@@ -25,6 +25,39 @@ namespace GraphDiffClient.Models
 		[JsonProperty(PropertyName = "userPrincipalName")]
 		public string Upn { get; set; }
 
+        [JsonProperty(PropertyName = "city")]
+        public string City { get; set; }
+
+        [JsonProperty(PropertyName = "country")]
+        public string Country { get; set; }
+
+        [JsonProperty(PropertyName = "department")]
+        public string Department { get; set; }
+
+        [JsonProperty(PropertyName = "jobTitle")]
+        public string JobTitle { get; set; }
+
+        [JsonProperty(PropertyName = "physicalDeliveryOfficeName")]
+        public string PhysicalDeliveryOfficeName { get; set; }
+
+        [JsonProperty(PropertyName = "postalCode")]
+        public string PostalCode { get; set; }
+
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; set; }
+
+        [JsonProperty(PropertyName = "streetAddress")]
+        public string StreetAddress { get; set; }
+
+        [JsonProperty(PropertyName = "mobile")]
+        public string Mobile { get; set; }
+
+        [JsonProperty(PropertyName = "telephoneNumber")]
+        public string TelephoneNumber { get; set; }
+
+        [JsonProperty(PropertyName = "mailNickname")]
+        public string MailNickname { get; set; }
+
 		[JsonIgnore]
 		public List<string> OtherMails
 		{
