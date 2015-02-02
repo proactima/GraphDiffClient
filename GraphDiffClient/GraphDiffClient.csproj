@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiffRequest.cs" />
+    <Compile Include="IGraphDiffClient.cs" />
     <Compile Include="Models\DiffResponse.cs" />
     <Compile Include="Models\DirectoryLinkChange.cs" />
     <Compile Include="Models\Group.cs" />
