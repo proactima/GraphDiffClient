@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -52,11 +53,16 @@ namespace GraphDiffClient
                 _accessToken = await _tokenRetriever().ConfigureAwait(false);
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+            var result = await ExecuteHttpRequestAsync(requestUri).ConfigureAwait(false);
 
-            var result = await ExecuteHttpRequestAsync(requestUri);
-            var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (result.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                _accessToken = await _tokenRetriever().ConfigureAwait(false);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                result = await ExecuteHttpRequestAsync(requestUri).ConfigureAwait(false);
+            }
 
-            var data = ParseResponse(stringResult);
+            var data = await ParseResponseAsync(result).ConfigureAwait(false);
 
             _nextLink = data.HasMorePages
                 ? data.NextPage
@@ -75,8 +81,9 @@ namespace GraphDiffClient
             return result;
         }
 
-        private static DiffResponse ParseResponse(string stringResult)
+        private static async Task<DiffResponse> ParseResponseAsync(HttpResponseMessage result)
         {
+            var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
             var data = JsonConvert.DeserializeObject<DiffResponse>(stringResult);
             var asJobject = JObject.Parse(stringResult);
             foreach (var change in asJobject["value"])
