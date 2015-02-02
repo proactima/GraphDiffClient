@@ -1,4 +1,4 @@
-namespace GraphDiffClient
+namespace GraphDiffClient.Models
 {
 	public class DiffRequest
 	{

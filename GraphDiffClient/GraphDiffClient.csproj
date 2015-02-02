@@ -54,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiffRequest.cs" />
+    <Compile Include="DiffHelpers.cs" />
+    <Compile Include="Models\DiffRequest.cs" />
     <Compile Include="IGraphDiffClient.cs" />
     <Compile Include="Models\DiffResponse.cs" />
     <Compile Include="Models\DirectoryLinkChange.cs" />

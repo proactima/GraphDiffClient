@@ -28,7 +28,7 @@ namespace GraphDiffClient
 
         public async Task<DiffResponse> GetObjectsAsync()
         {
-            var queryParams = GenerateQueryParams(null);
+            var queryParams = DiffHelpers.GenerateQueryParams(null);
             var requestUri =
                 new Uri(string.Format("https://graph.windows.net/{0}/directoryObjects", _tenantId)).AddQueryParameters(
                     queryParams);
@@ -104,22 +104,6 @@ namespace GraphDiffClient
                 }
             }
             return data;
-        }
-
-        private static Dictionary<string, string> GenerateQueryParams(List<string> selectList)
-        {
-            var queryParams = new Dictionary<string, string>
-            {
-                {"api-version", "1.5"},
-                {"deltaLink", ""},
-            };
-
-            if (selectList == null || !selectList.Any()) return queryParams;
-
-            var selectFilter = selectList.Aggregate((s1, s2) => s1 + "," + s2);
-            queryParams["$select"] = selectFilter;
-
-            return queryParams;
         }
     }
 }
