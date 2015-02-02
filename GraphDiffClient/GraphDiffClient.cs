@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GraphDiffClient.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GraphDiffClient
 {
@@ -23,6 +24,39 @@ namespace GraphDiffClient
 			_tokenRetriever = tokenRetriever;
 		}
 
+	    public async Task<DiffResponse> GetObjectsAsync()
+	    {
+            if (string.IsNullOrEmpty(_accessToken))
+                _accessToken = await _tokenRetriever().ConfigureAwait(false);
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+
+            var queryParams = GenerateQueryParams(null);
+            var requestUri = new Uri(string.Format("https://graph.windows.net/{0}/directoryObjects", _tenantId)).AddQueryParameters(queryParams);
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
+
+            var result = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            var data = JsonConvert.DeserializeObject<DiffResponse>(stringResult);
+            data.Users  = new List<User>();
+
+	        var asJobject = JObject.Parse(stringResult);
+	        foreach (var values in asJobject["value"])
+	        {
+                switch (values["odata.type"].ToString())
+	            {
+                    case "Microsoft.DirectoryServices.User":
+                        data.Users.Add(values.ToObject<User>());
+	                    break;
+	            }
+	        }
+
+            return data;
+	    }
+
 		public async Task<UserGraphResponse> GetUsersAsync(List<string> select = null)
 		{
 			if (string.IsNullOrEmpty(_accessToken))
@@ -32,7 +66,7 @@ namespace GraphDiffClient
 
 			var queryParams = GenerateQueryParams(select);
 			var requestUri =
-				new Uri(string.Format("https://graph.windows.net/{0}/users", _tenantId)).AddQueryParameters(queryParams);
+                new Uri(string.Format("https://graph.windows.net/{0}/users", _tenantId)).AddQueryParameters(queryParams);
 			var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
 			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 			request.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));

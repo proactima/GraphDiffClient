@@ -28,7 +28,7 @@ namespace GraphDiffClient.Sample
 				"User/otherMails",
 			};
 			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
-			var result = await client.GetUsersAsync().ConfigureAwait(false);
+            var result = await client.GetObjectsAsync().ConfigureAwait(false);
 			//var result = await client.GetGroupsAsync().ConfigureAwait(false);
 			//var result = await client.GetContactsAsync().ConfigureAwait(false);
 
