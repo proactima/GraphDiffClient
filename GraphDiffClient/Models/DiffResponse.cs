@@ -6,6 +6,13 @@ namespace GraphDiffClient.Models
 {
     public class DiffResponse
     {
+        public DiffResponse()
+        {
+            Users = new List<User>();
+            Groups = new List<Group>();
+            DirectoryLinkChanges = new List<DirectoryLinkChange>();
+        }
+
         [JsonProperty(PropertyName = "odata.metadata")]
         public string Metadata { get; set; }
 
@@ -32,5 +39,7 @@ namespace GraphDiffClient.Models
         }
 
         public List<User> Users { get; set; }
+        public List<Group> Groups { get; set; }
+        public List<DirectoryLinkChange> DirectoryLinkChanges { get; set; }
     }
 }

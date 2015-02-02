@@ -16,6 +16,7 @@ namespace GraphDiffClient
 		private readonly string _tenantId;
 		private readonly Func<Task<string>> _tokenRetriever;
 		private string _accessToken;
+	    private string _nextLink;
 
 		public GraphDiffClient(Func<Task<string>> tokenRetriever, string tenantId)
 		{
@@ -41,87 +42,31 @@ namespace GraphDiffClient
             var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             var data = JsonConvert.DeserializeObject<DiffResponse>(stringResult);
-            data.Users  = new List<User>();
 
 	        var asJobject = JObject.Parse(stringResult);
-	        foreach (var values in asJobject["value"])
+	        foreach (var change in asJobject["value"])
 	        {
-                switch (values["odata.type"].ToString())
+                switch (change["odata.type"].ToString())
 	            {
                     case "Microsoft.DirectoryServices.User":
-                        data.Users.Add(values.ToObject<User>());
+                        data.Users.Add(change.ToObject<User>());
+	                    break;
+                    case "Microsoft.DirectoryServices.Group":
+                        data.Groups.Add(change.ToObject<Group>());
+	                    break;
+                    case "Microsoft.DirectoryServices.Contact":
+	                    break;
+                    case "Microsoft.DirectoryServices.DirectoryLinkChange":
+                        data.DirectoryLinkChanges.Add(change.ToObject<DirectoryLinkChange>());
 	                    break;
 	            }
 	        }
 
+	        if (data.HasMorePages)
+	            _nextLink = data.NextPage;
+
             return data;
 	    }
-
-		public async Task<UserGraphResponse> GetUsersAsync(List<string> select = null)
-		{
-			if (string.IsNullOrEmpty(_accessToken))
-				_accessToken = await _tokenRetriever().ConfigureAwait(false);
-
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-
-			var queryParams = GenerateQueryParams(select);
-			var requestUri =
-                new Uri(string.Format("https://graph.windows.net/{0}/users", _tenantId)).AddQueryParameters(queryParams);
-			var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			request.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
-
-			var result = await _httpClient.SendAsync(request).ConfigureAwait(false);
-			var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-			var data = JsonConvert.DeserializeObject<UserGraphResponse>(stringResult);
-
-			return data;
-		}
-
-		public async Task<GroupGraphResponse> GetGroupsAsync(List<string> select = null)
-		{
-			if (string.IsNullOrEmpty(_accessToken))
-				_accessToken = await _tokenRetriever().ConfigureAwait(false);
-
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-
-			var queryParams = GenerateQueryParams(select);
-			var requestUri =
-				new Uri(string.Format("https://graph.windows.net/{0}/groups", _tenantId)).AddQueryParameters(queryParams);
-			var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			request.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
-
-			var result = await _httpClient.SendAsync(request).ConfigureAwait(false);
-			var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-			var data = JsonConvert.DeserializeObject<GroupGraphResponse>(stringResult);
-
-			return data;
-		}
-
-		public async Task<GroupGraphResponse> GetContactsAsync(List<string> select = null)
-		{
-			if (string.IsNullOrEmpty(_accessToken))
-				_accessToken = await _tokenRetriever().ConfigureAwait(false);
-
-			_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
-
-			var queryParams = GenerateQueryParams(select);
-			var requestUri =
-				new Uri(string.Format("https://graph.windows.net/{0}/contacts", _tenantId)).AddQueryParameters(queryParams);
-			var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			request.Headers.AcceptCharset.Add(new StringWithQualityHeaderValue("UTF-8"));
-
-			var result = await _httpClient.SendAsync(request).ConfigureAwait(false);
-			var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-			var data = JsonConvert.DeserializeObject<GroupGraphResponse>(stringResult);
-
-			return data;
-		}
 
 		private static Dictionary<string, string> GenerateQueryParams(List<string> selectList)
 		{
