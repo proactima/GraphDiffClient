@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
-namespace GraphDiffClient.Sample
+namespace Proactima.GraphDiff.Sample
 {
 	public class GraphService
 	{

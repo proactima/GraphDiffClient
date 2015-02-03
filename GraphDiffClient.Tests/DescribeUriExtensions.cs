@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Proactima.GraphDiff;
 using Xunit;
 
-namespace GraphDiffClient.Tests
+namespace Proactima.GraphDiff.Tests
 {
 	public class DescribeUriExtensions
 	{

@@ -9,8 +9,8 @@
     <ProjectGuid>{85449058-2E55-4031-ADEE-F8A3B2E0D8C7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphDiffClient.Tests</RootNamespace>
-    <AssemblyName>GraphDiffClient.Tests</AssemblyName>
+    <RootNamespace>Proactima.GraphDiff.Tests</RootNamespace>
+    <AssemblyName>Proactima.GraphDiff.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

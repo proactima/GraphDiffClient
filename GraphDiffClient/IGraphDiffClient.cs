@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using GraphDiffClient.Models;
+using Proactima.GraphDiff.Models;
 
-namespace GraphDiffClient
+namespace Proactima.GraphDiff
 {
 	public interface IGraphDiffClient
 	{

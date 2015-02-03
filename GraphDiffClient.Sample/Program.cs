@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphDiffClient.Sample
+namespace Proactima.GraphDiff.Sample
 {
 	internal class Program
 	{
