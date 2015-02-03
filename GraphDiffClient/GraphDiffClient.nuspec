@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>GraphDiffClient</id>
+    <version>0.1</version>
+    <authors>Anders Østhus</authors>
+    <owners>Proactima Solutions AS</owners>
+    <licenseUrl>https://raw.github.com/proactima/GraphDiffClient/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/proactima/GraphDiffClient</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Basic library to do differential queries against Azure AD Graph</description>
+    <releaseNotes>Initial.</releaseNotes>
+    <copyright>Copyright © Proactima Solutions AS - 2015</copyright>
+    <dependencies>
+      <dependency id="Microsoft.Net.Http" version="2.2" />
+      <dependency id="Newtonsoft.Json" version="6.0" />
+    </dependencies>
+  </metadata>
+</package>
