@@ -3,6 +3,7 @@ namespace GraphDiffClient.Models
 	public class DiffRequest
 	{
 		private string _apiVersion = "1.5";
+		private string _deltaLink = "";
 
 		public string ApiVersion
 		{
@@ -10,7 +11,10 @@ namespace GraphDiffClient.Models
 			set { _apiVersion = value; }
 		}
 
-		public string ResourceSet { get; set; }
-		public string DeltaLink { get; set; }
+		public string DeltaLink
+		{
+			get { return _deltaLink; }
+			set { _deltaLink = value; }
+		}
 	}
 }
