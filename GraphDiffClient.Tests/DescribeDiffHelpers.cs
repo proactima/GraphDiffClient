@@ -12,10 +12,10 @@ namespace GraphDiffClient.Tests
 		{
 			// g
 			var expected = new Dictionary<string, string>
-            {
-                {"api-version", "1.5"},
-                {"deltaLink", ""}
-            };
+			{
+				{"api-version", "1.5"},
+				{"deltaLink", ""}
+			};
 
 			var request = new DiffRequest();
 
@@ -31,12 +31,12 @@ namespace GraphDiffClient.Tests
 		{
 			// g
 			var expected = new Dictionary<string, string>
-            {
-                {"api-version", "1.5"},
-                {"deltaLink", "1234"}
-            };
+			{
+				{"api-version", "1.5"},
+				{"deltaLink", "1234"}
+			};
 
-			var request = new DiffRequest { DeltaLink = "1234" };
+			var request = new DiffRequest {DeltaLink = "1234"};
 
 			// w
 			var actual = DiffHelpers.GenerateQueryParams(request);

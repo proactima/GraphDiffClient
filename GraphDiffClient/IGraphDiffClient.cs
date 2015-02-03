@@ -3,9 +3,9 @@ using GraphDiffClient.Models;
 
 namespace GraphDiffClient
 {
-    public interface IGraphDiffClient
-    {
-	    Task<DiffResponse> GetObjectsAsync(string deltaLink = "");
-	    Task<DiffResponse> GetNextPageAsync();
-    }
+	public interface IGraphDiffClient
+	{
+		Task<DiffResponse> GetObjectsAsync(string deltaLink = "");
+		Task<DiffResponse> GetNextPageAsync();
+	}
 }

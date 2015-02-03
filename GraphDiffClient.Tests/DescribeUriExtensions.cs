@@ -27,8 +27,8 @@ namespace GraphDiffClient.Tests
 			var baseUri = new Uri("http://www.example.com/");
 
 			// w
-			var temp = baseUri.AddQueryParameters(new Dictionary<string, string> { { "query", "param" } });
-			var actual = temp.AddQueryParameters(new Dictionary<string, string> { { "foo", "bar" } });
+			var temp = baseUri.AddQueryParameters(new Dictionary<string, string> {{"query", "param"}});
+			var actual = temp.AddQueryParameters(new Dictionary<string, string> {{"foo", "bar"}});
 
 			// t
 			actual.ToString().Should().Be("http://www.example.com/?query=param&foo=bar");
@@ -41,7 +41,7 @@ namespace GraphDiffClient.Tests
 			var baseUri = new Uri("http://www.example.com/");
 
 			// w
-			var actual = baseUri.AddQueryParameters(new Dictionary<string, string> { { "query", "" } });
+			var actual = baseUri.AddQueryParameters(new Dictionary<string, string> {{"query", ""}});
 
 			// t
 			actual.ToString().Should().Be("http://www.example.com/?query=");

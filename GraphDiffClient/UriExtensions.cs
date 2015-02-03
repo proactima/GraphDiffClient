@@ -7,7 +7,6 @@ namespace GraphDiffClient
 {
 	public static class UriExtensions
 	{
-
 		/// <summary>
 		/// Adds the query parameters defined in the input dictionary to the Uri.
 		/// This can be called several times to add more parameters
@@ -33,7 +32,7 @@ namespace GraphDiffClient
 					return sb.AppendFormat("{0}={1}", kvp.Key, Uri.EscapeDataString(kvp.Value));
 				});
 
-			if(builder[builder.Length - 1] == '&')
+			if (builder[builder.Length - 1] == '&')
 				builder.Remove(builder.Length - 1, 1);
 
 			return new Uri(uri + builder.ToString());
@@ -74,7 +73,7 @@ namespace GraphDiffClient
 		/// <returns>The unescaped value, or null if not found</returns>
 		public static string ExtractNamedQueryParameter(this Uri uri, string parameterName, bool ignoreCase = true)
 		{
-			if(string.IsNullOrEmpty(parameterName))
+			if (string.IsNullOrEmpty(parameterName))
 				throw new ArgumentNullException("parameterName");
 
 			parameterName = ignoreCase
