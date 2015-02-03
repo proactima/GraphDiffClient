@@ -24,9 +24,9 @@ namespace GraphDiffClient
 			_tokenRetriever = tokenRetriever;
 		}
 
-		public async Task<DiffResponse> GetObjectsAsync()
+		public async Task<DiffResponse> GetObjectsAsync(string deltaLink = "")
 		{
-			var request = new DiffRequest();
+			var request = new DiffRequest {DeltaLink = deltaLink};
 			var queryParams = DiffHelpers.GenerateQueryParams(request);
 			var requestUri =
 				new Uri(string.Format("https://graph.windows.net/{0}/directoryObjects", _tenantId)).AddQueryParameters(

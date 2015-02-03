@@ -5,7 +5,7 @@ namespace GraphDiffClient
 {
     public interface IGraphDiffClient
     {
-        Task<DiffResponse> GetObjectsAsync();
-        Task<DiffResponse> GetNextPageAsync();
+	    Task<DiffResponse> GetObjectsAsync(string deltaLink = "");
+	    Task<DiffResponse> GetNextPageAsync();
     }
 }
