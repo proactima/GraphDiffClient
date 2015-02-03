@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GraphDiffClient.Models;
+using Proactima.GraphDiff.Models;
 
-namespace GraphDiffClient
+namespace Proactima.GraphDiff
 {
 	internal static class DiffHelpers
 	{

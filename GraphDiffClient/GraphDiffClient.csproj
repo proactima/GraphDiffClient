@@ -7,8 +7,8 @@
     <ProjectGuid>{23A249E3-69B6-415F-8943-35458505782F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphDiffClient</RootNamespace>
-    <AssemblyName>GraphDiffClient</AssemblyName>
+    <RootNamespace>Proactima.GraphDiff</RootNamespace>
+    <AssemblyName>Proactima.GraphDiff</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

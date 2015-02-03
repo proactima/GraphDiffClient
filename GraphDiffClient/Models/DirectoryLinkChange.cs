@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace GraphDiffClient.Models
+namespace Proactima.GraphDiff.Models
 {
 	public class DirectoryLinkChange
 	{

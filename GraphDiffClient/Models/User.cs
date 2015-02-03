@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace GraphDiffClient.Models
+namespace Proactima.GraphDiff.Models
 {
 	public class User
 	{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace GraphDiffClient.Models
+namespace Proactima.GraphDiff.Models
 {
 	public class DiffResponse
 	{

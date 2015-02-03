@@ -3,11 +3,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using GraphDiffClient.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Proactima.GraphDiff.Models;
 
-namespace GraphDiffClient
+namespace Proactima.GraphDiff
 {
 	public class GraphDiffClient : IGraphDiffClient
 	{

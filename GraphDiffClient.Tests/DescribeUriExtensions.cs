@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using Proactima.GraphDiff;
 using Xunit;
 
 namespace GraphDiffClient.Tests
