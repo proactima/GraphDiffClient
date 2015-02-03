@@ -28,7 +28,7 @@ namespace GraphDiffClient
 
         public async Task<DiffResponse> GetObjectsAsync()
         {
-            var queryParams = DiffHelpers.GenerateQueryParams(null);
+            var queryParams = DiffHelpers.GenerateQueryParams();
             var requestUri =
                 new Uri(string.Format("https://graph.windows.net/{0}/directoryObjects", _tenantId)).AddQueryParameters(
                     queryParams);

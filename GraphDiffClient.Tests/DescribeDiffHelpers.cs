@@ -17,27 +17,10 @@ namespace GraphDiffClient.Tests
             };
 
             // w
-            var actual = DiffHelpers.GenerateQueryParams(null);
+            var actual = DiffHelpers.GenerateQueryParams();
 
             // t
             actual.ShouldBeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public void ItGeneratesSelectFilterParams()
-        {
-            // g
-            var filter = new List<string>
-            {
-                "filterA",
-                "filterB"
-            };
-
-            // w
-            var actual = DiffHelpers.GenerateQueryParams(filter);
-
-            // t
-            actual["$select"].Should().Be("filterA,filterB");
         }
     }
 }
