@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Proactima.GraphDiff.Models;
 
 namespace Proactima.GraphDiff.Sample
 {
@@ -23,15 +24,25 @@ namespace Proactima.GraphDiff.Sample
 		{
 			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
 			var result = await client.GetObjectsAsync().ConfigureAwait(false);
+			OutputUsers(result);
 
-			foreach (var user in result.Users)
-			{
-				Console.WriteLine("UserObjectId: {0}  UPN: {1}  Name: {2}  E-Mail: {3}", user.Id, user.Upn,
-					user.DisplayName, user.OtherMails.FirstOrDefault());
-			}
+		    while (result.HasMorePages)
+		    {
+                result = await client.GetObjectsAsync(result.DeltaToken).ConfigureAwait(false);
+                OutputUsers(result);
+		    }
 		}
 
-		private async Task<string> AquireTokenForApplicationAsync()
+	    private static void OutputUsers(DiffResponse result)
+	    {
+	        foreach (var user in result.Users)
+	        {
+	            Console.WriteLine("UserObjectId: {0}  UPN: {1}  Name: {2}  E-Mail: {3}", user.Id, user.Upn,
+	                user.DisplayName, user.OtherMails.FirstOrDefault());
+	        }
+	    }
+
+	    private async Task<string> AquireTokenForApplicationAsync()
 		{
 			var authContext = new AuthenticationContext(string.Format("https://login.windows.net/{0}", _tenantId));
 			var credential = new ClientCredential(_clientId, _secret);

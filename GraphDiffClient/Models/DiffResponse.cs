@@ -17,25 +17,18 @@ namespace Proactima.GraphDiff.Models
 		public string Metadata { get; set; }
 
 		[JsonProperty(PropertyName = "aad.deltaLink")]
-		private Uri DeltaLink { get; set; }
+		internal Uri DeltaLink { get; set; }
 
-		public string DeltaToken
-		{
-			get
-			{
-				return DeltaLink == null
-					? string.Empty
-					: DeltaLink.ExtractNamedQueryParameter("deltaLink", false);
-			}
-		}
+        [JsonProperty(PropertyName = "aad.nextLink")]
+        internal Uri NextLink { get; set; }
 
-		[JsonProperty(PropertyName = "aad.nextPage")]
-		public string NextPage { get; set; }
+        [JsonIgnore]
+        public string DeltaToken { get; set; }
 
 		[JsonIgnore]
 		public bool HasMorePages
 		{
-			get { return !string.IsNullOrEmpty(NextPage); }
+            get { return NextLink != null; }
 		}
 
 		public List<User> Users { get; set; }
