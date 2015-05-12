@@ -62,12 +62,9 @@ namespace Proactima.GraphDiff.Models
 		public string Mail { get; set; }
 
 		[JsonIgnore]
-		public List<string> OtherMails
-		{
-			get { return _otherMails ?? new List<string>(); }
-		}
+		public List<string> OtherMails => _otherMails ?? new List<string>();
 
-		[JsonProperty(PropertyName = "otherMails")]
+	    [JsonProperty(PropertyName = "otherMails")]
 		private List<string> _otherMails { get; set; }
 
 		[JsonProperty(PropertyName = "userType")]

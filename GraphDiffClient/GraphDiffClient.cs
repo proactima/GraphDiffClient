@@ -26,7 +26,7 @@ namespace Proactima.GraphDiff
             var request = new DiffRequest {DeltaLink = deltaLink};
             var queryParams = DiffHelpers.GenerateQueryParams(request);
             var requestUri =
-                new Uri(string.Format("https://graph.windows.net/{0}/directoryObjects", _tenantId)).AddQueryParameters(
+                new Uri($"https://graph.windows.net/{_tenantId}/directoryObjects").AddQueryParameters(
                     queryParams);
 
             var data = await CallAdAsync(requestUri).ConfigureAwait(false);

@@ -47,6 +47,9 @@ namespace Proactima.GraphDiff
 		{
 			var result = new Dictionary<string, string>();
 
+		    if (uri == null)
+		        return result;
+
 			var query = uri.Query;
 			if (string.IsNullOrEmpty(query))
 				return result;
@@ -74,7 +77,7 @@ namespace Proactima.GraphDiff
 		public static string ExtractNamedQueryParameter(this Uri uri, string parameterName, bool ignoreCase = true)
 		{
 			if (string.IsNullOrEmpty(parameterName))
-				throw new ArgumentNullException("parameterName");
+				throw new ArgumentNullException(nameof(parameterName));
 
 			parameterName = ignoreCase
 				? parameterName.Trim().ToLower()

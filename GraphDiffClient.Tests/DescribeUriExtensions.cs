@@ -207,5 +207,17 @@ namespace Proactima.GraphDiff.Tests
 			// t
 			actual.Should().Be("");
 		}
+
+	    [Fact]
+	    public void ItShouldNotBlowUpWhenGivenNull()
+	    {
+	        // g
+	        
+            // w
+	        var actual = UriExtensions.ExtractQueryParams(null);
+
+            // t
+	        actual.Count.Should().Be(0);
+	    }
 	}
 }

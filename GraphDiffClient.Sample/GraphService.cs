@@ -9,9 +9,9 @@ namespace Proactima.GraphDiff.Sample
 {
 	public class GraphService
 	{
-		private readonly string _clientId = "";
-		private readonly string _secret = "";
-		private readonly string _tenantId = "";
+		private readonly string _clientId;
+		private readonly string _secret;
+		private readonly string _tenantId;
 
 		public GraphService()
 		{
@@ -44,7 +44,7 @@ namespace Proactima.GraphDiff.Sample
 
 	    private async Task<string> AquireTokenForApplicationAsync()
 		{
-			var authContext = new AuthenticationContext(string.Format("https://login.windows.net/{0}", _tenantId));
+			var authContext = new AuthenticationContext($"https://login.windows.net/{_tenantId}");
 			var credential = new ClientCredential(_clientId, _secret);
 
 			var result =

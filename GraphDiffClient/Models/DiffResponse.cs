@@ -26,12 +26,9 @@ namespace Proactima.GraphDiff.Models
         public string DeltaToken { get; set; }
 
 		[JsonIgnore]
-		public bool HasMorePages
-		{
-            get { return NextLink != null; }
-		}
+		public bool HasMorePages => NextLink != null;
 
-		public List<User> Users { get; set; }
+	    public List<User> Users { get; set; }
 		public List<Group> Groups { get; set; }
 		public List<DirectoryLinkChange> DirectoryLinkChanges { get; set; }
 	}
