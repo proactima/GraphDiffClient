@@ -22,14 +22,26 @@ namespace Proactima.GraphDiff.Sample
 
 		public async Task GetUsers()
 		{
-			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId);
-			var result = await client.GetObjectsAsync().ConfigureAwait(false);
+			var client = new GraphDiffClient(AquireTokenForApplicationAsync, _tenantId, null, null);
+			var response = await client.GetObjectsAsync().ConfigureAwait(false);
+		    if (response.HasError)
+		    {
+		        Console.WriteLine("Error in response");
+		        return;
+		    }
+
+		    var result = response.Data;
 			OutputUsers(result);
 
 		    while (result.HasMorePages)
 		    {
-                result = await client.GetObjectsAsync(result.DeltaToken).ConfigureAwait(false);
-                OutputUsers(result);
+                response = await client.GetObjectsAsync(result.DeltaToken).ConfigureAwait(false);
+                if (response.HasError)
+                {
+                    Console.WriteLine("Error in response");
+                    return;
+                }
+                OutputUsers(response.Data);
 		    }
 		}
 
@@ -52,5 +64,10 @@ namespace Proactima.GraphDiff.Sample
 
 			return result.AccessToken;
 		}
+
+	    private static void Logger(string step, string message)
+	    {
+	        Console.WriteLine($"{step} - {message}");
+	    }
 	}
 }

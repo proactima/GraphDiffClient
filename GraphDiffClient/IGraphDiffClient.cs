@@ -5,6 +5,6 @@ namespace Proactima.GraphDiff
 {
 	public interface IGraphDiffClient
 	{
-		Task<DiffResponse> GetObjectsAsync(string deltaLink = "");
+		Task<GraphResponse> GetObjectsAsync(string deltaLink = "");
 	}
 }

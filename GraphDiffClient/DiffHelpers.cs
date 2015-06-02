@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -27,20 +28,24 @@ namespace Proactima.GraphDiff
                 var delta = data.NextLink.ExtractNamedQueryParameter("deltaLink", false);
                 return delta;
             }
-            else
+
+            if(data.DeltaLink != null)
             {
                 var delta = data.DeltaLink.ExtractNamedQueryParameter("deltaLink", false);
                 return delta;
             }
+
+            return string.Empty;
         }
 
-        internal static async Task<DiffResponse> ParseResponseAsync(HttpResponseMessage result)
+        internal static async Task<DiffResponse> ParseResponseAsync(HttpResponseMessage result, Action<string, string> infoLogger)
         {
             var stringResult = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
             var data = JsonConvert.DeserializeObject<DiffResponse>(stringResult);
             var asJobject = JObject.Parse(stringResult);
 
             data.DeltaToken = GetDeltaToken(data);
+            infoLogger("ParseResponseAsync", $"Got DeltaToken {data.DeltaToken}");
 
             foreach (var change in asJobject["value"])
             {

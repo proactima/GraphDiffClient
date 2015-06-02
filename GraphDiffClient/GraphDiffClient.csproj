@@ -59,6 +59,7 @@
     <Compile Include="IGraphDiffClient.cs" />
     <Compile Include="Models\DiffResponse.cs" />
     <Compile Include="Models\DirectoryLinkChange.cs" />
+    <Compile Include="Models\GraphResponse.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="GraphDiffClient.cs" />
