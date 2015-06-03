@@ -36,8 +36,9 @@ namespace Proactima.GraphDiff
                         queryParams);
 
                 var data = await CallAdAsync(requestUri).ConfigureAwait(false);
-                var response = GraphResponse.Create(data);
-                return response;
+                return data == null
+                    ? GraphResponse.CreateFailedResponse("Something went wrong")
+                    : GraphResponse.Create(data);
             }
             catch (Exception ex)
             {
@@ -63,6 +64,8 @@ namespace Proactima.GraphDiff
                 _accessToken = await _tokenRetriever().ConfigureAwait(false);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 result = await ExecuteHttpRequestAsync(requestUri).ConfigureAwait(false);
+                if (!result.IsSuccessStatusCode)
+                    return null;
             }
 
             var data = await DiffHelpers.ParseResponseAsync(result, _infoLogger).ConfigureAwait(false);
